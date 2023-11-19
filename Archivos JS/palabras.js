@@ -11,9 +11,12 @@ function verificarPalabras(){
         var palabrasSeparadas = palabras.split(' ');
         var palabrasUnicas = [...new Set(palabrasSeparadas)];
 
+        var palabrasSinTildes = palabrasUnicas.map(function(palabra) {
+            return quitarTildes(palabra);
+        });
         
-        localStorage.setItem('listaPalabras', JSON.stringify(palabrasUnicas));
-        document.getElementById('listaPalabras').innerHTML = palabrasUnicas;
+        localStorage.setItem('listaPalabras', JSON.stringify(palabrasSinTildes));
+        document.getElementById('listaPalabras').innerHTML = palabrasSinTildes;
 
         var boton = document.getElementById("botonSeguir");
         boton.style.display = "block";
@@ -23,6 +26,9 @@ function verificarPalabras(){
     modal.show();
 }
 
+function quitarTildes(palabra) {
+    return palabra.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
 
 // FUNCIONES DE PALABRAS INFO
 var info = {
