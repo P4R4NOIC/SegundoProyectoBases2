@@ -1,10 +1,13 @@
-var titulos = ["Navidad", "Fernando VII de España", "Revolución francesa", "Segunda Guerra Mundial", "Alan Turing", "El uso del conocimiento en la sociedad"]
+var titulosLista;
 
-
+function pideTitulos(){
+  pedirTitulos();
+}
 
 function cargaTitulos(){
-  for(var i = 0; i < titulos.length; i++){
-    creaTitulos(titulos[i]);
+
+  for(var i = 0; i < titulosLista.length; i++){
+    creaTitulos(titulosLista[i]["titulo_principal"], titulosLista[i]["link"]);
   }
 
   gsap.utils.toArray('.lineaCompleta').forEach((line, i) => {
@@ -27,7 +30,7 @@ function cargaTitulos(){
 
 }
   
-function creaTitulos(titulo){
+function creaTitulos(titulo, link){
   var a = document.createElement("a");
   var span = document.createElement("span");
 
@@ -38,6 +41,7 @@ function creaTitulos(titulo){
   a.classList = "tituloSolo"
   a.onclick = function(){
       localStorage.setItem("tituloActual", titulo);
+      localStorage.setItem("linkActual", link);
   }
 
   document.getElementById("lineaCompleta").appendChild(a);
@@ -78,3 +82,25 @@ function carrusel(titulos, velocidad) {
     return tl;
   }
 
+function pedirTitulos(){
+    let datosRecibidos;
+    // Hacer la solicitud GET al servidor
+    fetch('http://localhost:3000/paginas')
+    .then(response => {
+        if (!response.ok) {
+            alert('No se pudo obtener la información del usuario');
+        }
+        return response.json(); // Parsea la respuesta JSON
+    })
+    .then(data => {
+        // Datos recibidos
+        datosRecibidos = data;
+        titulosLista = datosRecibidos;
+        
+       
+        cargaTitulos();
+    })
+    .catch(error => {
+        console.error('Error al obtener la información del usuario:', error);
+    });
+}

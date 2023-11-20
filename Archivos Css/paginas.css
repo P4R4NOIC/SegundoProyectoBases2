@@ -36,6 +36,7 @@
     display:flex; 
     align-items:center;
     overflow-x: hidden;
+
     width:-50%;
     margin:auto;
     margin-top: 200px;
@@ -64,7 +65,9 @@
       will-change: transform;
       display: flex;
       flex-direction: column;
-     
+     overflow-y: scroll;
+     overflow-x: hidden;
+     height: 800px;
   }
   .tituloSolo {
     padding-bottom: 60px;

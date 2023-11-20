@@ -35,4 +35,6 @@
     background-color: #191B37;  
     border-radius: 8px;
     color: whitesmoke;
+    overflow-y: scroll;
+    max-height: 700px;
   }

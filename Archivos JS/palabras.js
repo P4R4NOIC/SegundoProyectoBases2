@@ -31,39 +31,77 @@ function quitarTildes(palabra) {
 }
 
 // FUNCIONES DE PALABRAS INFO
-var info = {
-    "palabra": "Revolución",
-    "paginas": [
-      {
-        "direccion": "https://www.ejemplo.com/inicio",
-        "numero": 125
-      },
-      {
-        "direccion": "https://www.ejemplo.com/servicios",
-        "numero": 20
-      },
-      {
-        "direccion": "https://www.ejemplo.com/contacto",
-        "numero": 33
-      }
-    ],
-    "porcentajeTodasPaginas": 50,
-    "porcentajeTitulos": 75,
-    "porcentajeSubtitulos": 30,
-    "porcentajeTexto": 90
+// var info = {
+//     "palabra": "Revolución",
+//     "paginas": [
+//       {
+//         "direccion": "https://www.ejemplo.com/inicio",
+//         "numero": 125
+//       },
+//       {
+//         "direccion": "https://www.ejemplo.com/servicios",
+//         "numero": 20
+//       },
+//       {
+//         "direccion": "https://www.ejemplo.com/contacto",
+//         "numero": 33
+//       }
+//     ],
+//     "porcentajeTodasPaginas": 50,
+//     "porcentajeTitulos": 75,
+//     "porcentajeSubtitulos": 30,
+//     "porcentajeTexto": 90
+// }
+
+function pedirPalabras(palabra){
+    let datosRecibidos;
+    // Hacer la solicitud GET al servidor
+    fetch('http://localhost:3000/palabra/'+palabra)
+    .then(response => {
+        if (!response.ok) {
+            alert('No se pudo obtener la información del usuario');
+        }
+        return response.json(); // Parsea la respuesta JSON
+    })
+    .then(data => {
+        // Datos recibidos
+        datosRecibidos = data;
+        cargarInformacion(datosRecibidos);
+    })
+    .catch(error => {
+        console.error('Error al obtener la información del usuario:', error);
+    });
 }
 
 function cargarPagina(){
     var palabras = JSON.parse(localStorage.getItem('listaPalabras'));
-    console.log(palabras);
-    palabras.forEach(function(elemento) {
-        cargarInformacion(elemento);
-    });
-    cargarTotal();
+    localStorage.setItem('sumaTodasPaginas', 0);
+    localStorage.setItem('sumaTitulos', 0);
+    localStorage.setItem('sumaSubtitulos', 0);
+    localStorage.setItem('sumaTexto', 0);
+    localStorage.setItem('contador', 0);
+
+    function procesarPalabras(index) {
+        if (index < palabras.length) {
+            pedirPalabras(palabras[index]);
+
+            // Especificar el tiempo de pausa en milisegundos (por ejemplo, 1000 para 1 segundo)
+            setTimeout(function() {
+                procesarPalabras(index + 1);
+            }, 1000); // Pausa de 1 segundo
+        } else {
+            // Luego de completar el bucle, llamar a cargarTotal
+            cargarTotal();
+        }
+    }
+
+    // Llamar a la función con el índice inicial
+    procesarPalabras(0);
 
 }
 
-function cargarInformacion(elemento){
+function cargarInformacion(info){
+    console.log(info);
     // Crear el contenedor principal
     var divPrincipal = document.createElement('div');
     divPrincipal.classList.add('row', 'text-center', 'cajaPrincipal');
@@ -104,7 +142,7 @@ function cargarInformacion(elemento){
     var divCol = document.createElement('div');
     divCol.classList.add('col');
     var parrafo = document.createElement('p');
-    parrafo.textContent = info.porcentajeTodasPaginas;
+    parrafo.textContent = parseFloat(info.porcentajeTodasPaginas.toFixed(4));
     var segundoParrafo = document.createElement('p');
     segundoParrafo.textContent = "% en todas las páginas";
     divCol.appendChild(segundoParrafo);
@@ -114,7 +152,7 @@ function cargarInformacion(elemento){
     var divCol = document.createElement('div');
     divCol.classList.add('col');
     var parrafo = document.createElement('p');
-    parrafo.textContent = info.porcentajeTitulos;
+    parrafo.textContent = parseFloat(info.porcentajeTitulos.toFixed(4));
     var segundoParrafo = document.createElement('p');
     segundoParrafo.textContent = "% de veces en titulos";
     divCol.appendChild(segundoParrafo);
@@ -124,7 +162,7 @@ function cargarInformacion(elemento){
     var divCol = document.createElement('div');
     divCol.classList.add('col');
     var parrafo = document.createElement('p');
-    parrafo.textContent = info.porcentajeSubtitulos;
+    parrafo.textContent = parseFloat(info.porcentajeSubtitulos.toFixed(4));
     var segundoParrafo = document.createElement('p');
     segundoParrafo.textContent = "% de veces en subtitulos";
     divCol.appendChild(segundoParrafo);
@@ -134,7 +172,7 @@ function cargarInformacion(elemento){
     var divCol = document.createElement('div');
     divCol.classList.add('col');
     var parrafo = document.createElement('p');
-    parrafo.textContent = info.porcentajeTexto;
+    parrafo.textContent = parseFloat(info.porcentajeTexto.toFixed(4));
     var segundoParrafo = document.createElement('p');
     segundoParrafo.textContent = "% de veces en el texto";
     divCol.appendChild(segundoParrafo);
@@ -144,9 +182,36 @@ function cargarInformacion(elemento){
     // Agregar todo al body del documento
     document.body.appendChild(divPrincipal);
 
+    //CONTADOR
+    var sumaTodasPaginas = parseFloat(localStorage.getItem('sumaTodasPaginas'));
+    var sumaTitulos = parseFloat(localStorage.getItem('sumaTitulos'));
+    var sumaSubtitulos = parseFloat(localStorage.getItem('sumaSubtitulos'));
+    var sumaTexto = parseFloat(localStorage.getItem('sumaTexto'));
+    var contador = parseInt(localStorage.getItem('contador'));
+
+    sumaTodasPaginas += parseFloat(info.porcentajeTodasPaginas);
+    sumaTitulos += parseFloat(info.porcentajeTitulos);
+    sumaSubtitulos += parseFloat(info.porcentajeSubtitulos);
+    sumaTexto += parseFloat(info.porcentajeTexto);
+    contador += 1;
+
+    localStorage.setItem('sumaTodasPaginas', sumaTodasPaginas);
+    localStorage.setItem('sumaTitulos', sumaTitulos);
+    localStorage.setItem('sumaSubtitulos', sumaSubtitulos);
+    localStorage.setItem('sumaTexto', sumaTexto);
+    localStorage.setItem('contador', contador);
+
 }
 
 function cargarTotal(){
+
+    var sumaTodasPaginas = parseFloat(localStorage.getItem('sumaTodasPaginas'));
+    var sumaTitulos = parseFloat(localStorage.getItem('sumaTitulos'));
+    var sumaSubtitulos = parseFloat(localStorage.getItem('sumaSubtitulos'));
+    var sumaTexto = parseFloat(localStorage.getItem('sumaTexto'));
+    var contador = parseInt(localStorage.getItem('contador'));
+
+
     // Crear el contenedor principal
     var divPrincipal = document.createElement('div');
     divPrincipal.classList.add('row', 'text-center', 'cajaPrincipal');
@@ -159,7 +224,7 @@ function cargarTotal(){
     var divCol = document.createElement('div');
     divCol.classList.add('col');
     var parrafo = document.createElement('p');
-    parrafo.textContent = info.porcentajeTodasPaginas;
+    parrafo.textContent = sumaTodasPaginas/contador;
     var segundoParrafo = document.createElement('p');
     segundoParrafo.textContent = "% en todas las páginas";
     divCol.appendChild(segundoParrafo);
@@ -169,7 +234,7 @@ function cargarTotal(){
     var divCol = document.createElement('div');
     divCol.classList.add('col');
     var parrafo = document.createElement('p');
-    parrafo.textContent = info.porcentajeTitulos;
+    parrafo.textContent = sumaTitulos/contador;
     var segundoParrafo = document.createElement('p');
     segundoParrafo.textContent = "% de veces en titulos";
     divCol.appendChild(segundoParrafo);
@@ -179,7 +244,7 @@ function cargarTotal(){
     var divCol = document.createElement('div');
     divCol.classList.add('col');
     var parrafo = document.createElement('p');
-    parrafo.textContent = info.porcentajeSubtitulos;
+    parrafo.textContent = sumaSubtitulos/contador;
     var segundoParrafo = document.createElement('p');
     segundoParrafo.textContent = "% de veces en subtitulos";
     divCol.appendChild(segundoParrafo);
@@ -189,7 +254,7 @@ function cargarTotal(){
     var divCol = document.createElement('div');
     divCol.classList.add('col');
     var parrafo = document.createElement('p');
-    parrafo.textContent = info.porcentajeTexto;
+    parrafo.textContent = sumaTexto/contador;
     var segundoParrafo = document.createElement('p');
     segundoParrafo.textContent = "% de veces en el texto";
     divCol.appendChild(segundoParrafo);
