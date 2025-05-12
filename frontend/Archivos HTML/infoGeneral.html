@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wikipedia Crawler (nombre provisional)</title>
+    <link rel="icon" type="image/x-icon" href="../Miscelaneo/favicon.ico">
+    <!-- BOOTSTRAP STYLES -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> 
+    <!-- CSS -->
+    <link rel="stylesheet" href="../Archivos CSS/estilosGenerales.css">
+    <link rel="stylesheet" href="../Archivos Css/paginaInfo.css">
+    <!-- JS -->
+    <script type = "text/javaScript" src="../Archivos JS/infoGeneral.js"></script>
+</head>
+<body class = "body" onload= "cargarPagina()">
+
+  
+    <a href="main.html" class = "volverBoton">Volver</a>
+    
+    <div class="container">
+        <div class="row ">
+
+          <div class="col">
+
+            <div class="row titulo">
+                <label class = "titulo" id = "tituloPagina"></label>
+            </div>
+            
+            <div class="row" id = "derecha">
+                <label class = "textoSimple" id = "titulos"></label>
+                <label class = "textoSimple" id = "titulosPalabras"></label>
+                <label class = "textoSimple" id = "refLinks"></label>
+                <label class = "textoSimple" id = "referencias"></label>
+
+              
+            </div>
+            
+          </div>
+
+          <div class="col">
+            <div class="row segundaColumna">
+                <label class = "textoSimple" id = "palabras"></label>
+                <label class = "textoSimple" id = "palabrasSub"></label>
+                <label class = "textoSimple" id = "links"></label>
+                <label class = "textoSimple" id = "alts"></label>
+
+               
+                
+            </div>
+          </div>
+
+        
+        </div>
+    </div>
+
+
+
+
+</body>
+</html>

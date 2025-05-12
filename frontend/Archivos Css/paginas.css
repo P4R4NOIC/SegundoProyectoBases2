@@ -1,0 +1,84 @@
+.body{
+    background-color: #404258;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+
+}
+
+
+.volverBoton{
+  margin-left: 90%;
+  margin-top: 45px;
+  position: absolute;
+  display: inline-block;
+  color: rgb(202, 199, 199);
+  border: 2px solid #ccc; 
+  border-radius: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 30px;
+  font-family: arial;
+  color: rgb(202, 199, 199);
+  text-decoration: none;
+}
+
+.volverBoton:hover{
+  color: rgb(121, 119, 119);
+  background-color: rgb(232, 227, 227);
+  border: 2px solid #4d4d4d;
+  
+}
+
+.titulos {
+    display:flex; 
+    align-items:center;
+    overflow-x: hidden;
+
+    width:-50%;
+    margin:auto;
+    margin-top: 200px;
+
+    
+  }
+
+  .titulo{
+   
+    margin-left: 40%;
+    margin-top: 45px;
+    position: absolute;
+    font-size: 40px;
+    font-family: arial;
+    display: inline-block;
+    color: rgb(202, 199, 199);
+  }
+
+ 
+      
+  .lineaCompleta {
+    align-items:center;
+      position: relative;
+      white-space: nowrap;
+      padding: 0;
+      will-change: transform;
+      display: flex;
+      flex-direction: column;
+     overflow-y: scroll;
+     overflow-x: hidden;
+     height: 800px;
+  }
+  .tituloSolo {
+    padding-bottom: 60px;
+    font-size: 40px;
+    font-family: arial;
+    display: inline-block;
+    color: rgb(202, 199, 199);
+    text-decoration: none;
+  
+  }
+  .tituloSolo:hover {
+      color: #8b3f46;
+  }
+  
